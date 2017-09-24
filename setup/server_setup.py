@@ -86,10 +86,10 @@ def setup_database(opts):
         run_cmd("echo 'quit' | mysql -u %s %s %s" % (opts.database_user,
             password_opt, opts.database_name))
     except CmdError:
-        with MySQLdb.connect(host="127.0.0.1", user="root",
+        with MySQLdb.connect(host="127.0.0.1", user="croot",
                 passwd=opts.database_root_password) as cursor:
             cursor.execute(SETUP_SQL["creation"] % (opts.database_name,))
-            if opts.database_user != "root":
+            if opts.database_user != "croot":
                 if opts.database_password:
                     cursor.execute(SETUP_SQL["user_grant_passwd"]
                         % (opts.database_user, opts.database_password))
