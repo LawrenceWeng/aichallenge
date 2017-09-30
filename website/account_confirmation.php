@@ -6,14 +6,14 @@ $title = "Account Confirmed";
 require_once('header.php');
 
 function get_userid_from_confirmation_code($confirmation_code) {
-    $confirmation_code = mysql_real_escape_string( stripslashes( $confirmation_code ) );
+    $confirmation_code = mysqli_real_escape_string($db_link,  stripslashes( $confirmation_code ) );
     $query = "
         SELECT user_id
         FROM user
         WHERE activation_code = '$confirmation_code'";
-    $result = mysql_query($query);
-    if (mysql_num_rows($result) > 0 ) {
-        return mysql_result($result,0, 0);
+    $result = mysqli_query($db_link, $query);
+    if (mysqli_num_rows($result) > 0 ) {
+        return mysqli_result($result,0, 0);
     } else {
         return false;
     }
@@ -31,7 +31,7 @@ if ($confirmation_code == NULL || strlen($confirmation_code) <= 0) {
     } else {
         $result = activate_user($user_id);
         if (!$result) {
-            echo mysql_error();
+            echo mysqli_error($db_link);
           $errors[] = "Failed to activate the account. (103)";
         }
     }

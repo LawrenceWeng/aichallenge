@@ -70,45 +70,29 @@ def setup_base_files(opts):
 SETUP_SQL = {
     "creation": "create database %s",
     "user_grant_passwd":
-            "grant usage on *.* to %s@localhost identified by '%s'",
+    "grant usage on *.* to %s@% identified by '%s'",
     "user_grant_nopasswd":
-            "grant usage on *.* to %s@localhost",
-    "database_perms": "grant all privileges on %s.* to %s@localhost",
-    }
+    "grant usage on *.* to '%s'@'%%'",
+    "database_perms": "grant all privileges on %s.* to '%s'@'%%'",
+                                                    }
+
 
 def setup_database(opts):
     """ Setup database for contest use """
     import MySQLdb
     try:
-        password_opt = ""
-        if opts.database_password:
-            password_opt = "-p'%s'" % (opts.database_password,)
-        run_cmd("echo 'quit' | mysql -u %s %s %s" % (opts.database_user,
-            password_opt, opts.database_name))
+        run_cmd("echo 'quit' | mysql %s" % (opts.database_name))
     except CmdError:
-        with MySQLdb.connect(host="127.0.0.1", user="croot",
-                passwd=opts.database_root_password) as cursor:
-            cursor.execute(SETUP_SQL["creation"] % (opts.database_name,))
-            if opts.database_user != "croot":
-                if opts.database_password:
-                    cursor.execute(SETUP_SQL["user_grant_passwd"]
-                        % (opts.database_user, opts.database_password))
-                else:
-                    cursor.execute(SETUP_SQL["user_grant_nopasswd"]
-                        % (opts.database_user,))
-                cursor.execute(SETUP_SQL["database_perms"]
-                        % (opts.database_name, opts.database_user))
-        password_opt = ""
-        if opts.database_password:
-            password_opt = "-p'%s'" % (opts.database_password,)
+        run_cmd("echo \"%s\" | sudo mysql" % (SETUP_SQL["creation"] % (opts.database_name,)))
+        run_cmd("echo \"%s\" | sudo mysql" % (SETUP_SQL["user_grant_nopasswd"] % (opts.database_user,)))
+        run_cmd("echo \"%s\" | sudo mysql" % (SETUP_SQL["database_perms"] % (opts.database_name,opts.database_user)))
         schema_dir = os.path.join(opts.local_repo, "sql")
         schema_files = os.listdir(schema_dir)
         schema_files = [f for f in schema_files if f.endswith(".sql")]
         schema_files.sort()
         for sf in schema_files:
             sp = os.path.join(schema_dir, sf)
-            run_cmd("mysql -u %s %s %s < %s" % (opts.database_user,
-                password_opt, opts.database_name, sp))
+            run_cmd("mysql %s < %s" % (opts.database_name, sp))
 
 def setup_language_repo(opts):
     """ Download languages not part of OS distribution locally for workers """
@@ -140,7 +124,8 @@ def setup_website(opts):
             with open("server_info.php", "w") as si_file:
                 si_file.write(si_contents)
         # setup pygments flavored markdown
-        run_cmd("easy_install ElementTree")
+        #run_cmd("easy_install ElementTree")
+        run_cmd("easy_install http://effbot.org/media/downloads/elementtree-1.2.6-20050316.tar.gz")
         run_cmd("easy_install Markdown")
         run_cmd("easy_install Pygments")
         if not os.path.exists("aichallenge.wiki"):

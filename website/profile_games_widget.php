@@ -34,9 +34,9 @@ where
     s.user_id = $user_id
 EOT;
 
-    $submission_data = mysql_query($submission_query);
+    $submission_data = mysqli_query($db_link, $submission_query);
     if ($submission_data) {
-        list($submission) = mysql_fetch_row($submission_data);
+        list($submission) = mysqli_fetch_row($submission_data);
     } else {
         $submission = -1;
     }
@@ -51,9 +51,9 @@ where
     (g.player_one = $submission or g.player_two = $submission)
 EOT;
 
-    $rowcount_data = mysql_query($rowcount_query);
+    $rowcount_data = mysqli_query($db_link, $rowcount_query);
     if ($rowcount_data) {
-        list($rowcount) = mysql_fetch_row($rowcount_data);
+        list($rowcount) = mysqli_fetch_row($rowcount_data);
     } else {
         $rowcount = 0;
     }
@@ -131,7 +131,7 @@ EOT;
         $games_query .= " limit $viewresults OFFSET " . ($viewresults * ($page-1));
     }
 
-    $games_results = mysql_query($games_query);
+    $games_results = mysqli_query($db_link, $games_query);
 
     // If query fails
     if (!$games_results || $rowcount == 0) {
@@ -145,7 +145,7 @@ EOT;
     }
     $table .= "<table class=\"submissions\"><thead><tr><th>Time</th><th>Opponent</th><th>Outcome</th><th>&nbsp;</th></tr></thead>";
     $table .= "<tbody>";
-    for ($i = 1; $row = mysql_fetch_assoc($games_results); $i += 1) {
+    for ($i = 1; $row = mysqli_fetch_assoc($games_results); $i += 1) {
         $opp_name = htmlentities($row["opp_name"], ENT_COMPAT, "UTF-8");
         $opp_id = $row["opp_id"];
 	$game_id = $row["game_id"];

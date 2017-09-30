@@ -42,12 +42,12 @@ order by
     timestamp asc
 EOT;
 
-$result = mysql_query($query);
+$result = mysqli_query($db_link, $query);
 
 $DataSet = new pData;
 if ($result) {
     // Dynamic Splitting (12 hours vs. days)
-    $hours = mysql_num_rows($result);
+    $hours = mysqli_num_rows($result);
     $time_label_hours = floor(h/72) * 12 + 12;
 
     // Grab Data From Data Source
@@ -55,7 +55,7 @@ if ($result) {
     $max_rank = array();
     $min_rank = array();
     $time_days= array();
-    for ($i = 1; $row = mysql_fetch_assoc($result); $i += 1) {
+    for ($i = 1; $row = mysqli_fetch_assoc($result); $i += 1) {
         // Pad Data For First Day
         if ($i == 1) {
             $padding = ($row["hour"]) % $time_label_hours;

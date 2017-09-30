@@ -36,7 +36,7 @@ def install_basic_languages():
 
 def install_extra_distribution_languages():
     """ Install all extra languages that are part of the Ubuntu distribution
-        and don't require any special installation steps -"liblua5.1-socket-dev""""
+        and don't require any special installation steps - liblua5.1-socket-dev"""
     pkg_list = ["ruby", "php-cli", "perl", "ocaml", "luajit", "lua-socket-dev", "ghc",
             "common-lisp-controller", "sbcl", "mono-devel", "mono-vbnc",
             "erlang-base", "fp-compiler", "gnat", "tcl", "octave" ]
