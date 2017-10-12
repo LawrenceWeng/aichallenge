@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 function validate_user_cookie() {
@@ -29,7 +28,6 @@ function current_username() {
         return NULL;
     }
 }
-
 function current_user_id() {
   if( isset($_SESSION['user_id']) ) {
     return $_SESSION['user_id'];
@@ -39,8 +37,10 @@ function current_user_id() {
 }
 
 function activate_user($user_id) {
+  global $db_link;
   $query = "UPDATE user SET activated = 1 WHERE user_id = '$user_id'";
   return mysqli_query($db_link, $query);
 }
 
 $errors = array();
+?>

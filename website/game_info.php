@@ -47,6 +47,7 @@ if($game_id == 0){
 
 
 function get_playback($game_id){
+  global $db_link;
   $sql = "SELECT * from playback where game_id = $game_id";
   $q = mysqli_query($db_link, $sql);
   $result = mysqli_fetch_assoc($q);
@@ -59,6 +60,7 @@ function get_playback($game_id){
 
 
 function get_error_message($game_id){
+  global $db_link;
   $error_types = array(
     'TIMEOUT' => 'crashed / did not start / timeout',
     'BAD_ORDER' => 'issued an invalid order.',

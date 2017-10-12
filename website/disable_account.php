@@ -4,6 +4,7 @@ require_once('session.php');
 require_once('mysql_login.php');
 
 function safe_str($str) {
+    global $db_link;
     return mysqli_real_escape_string($db_link, stripslashes($str));
 }
 

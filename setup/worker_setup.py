@@ -193,7 +193,7 @@ def setup_base_chroot(options):
     base_chroot_dir = os.path.join(chroot_dir, "aic-base")
     if not os.path.exists(base_chroot_dir):
         os.makedirs(base_chroot_dir)
-        run_cmd("debootstrap --variant=buildd --arch %s natty \
+        run_cmd("debootstrap --variant=buildd --arch %s zesty \
                 %s %s" % (options.arch, base_chroot_dir, options.os_url))
         with CD(TEMPLATE_DIR):
             run_cmd("cp chroot_configs/chroot.d/aic-base /etc/schroot/chroot.d/")

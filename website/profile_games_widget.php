@@ -12,6 +12,7 @@ include_once "pagination.php";
  */
 function getGamesTableString($user_id, $viewmore = true, $viewresults = 10, $viewlink, $page=0)
 {
+    global $db_link;
     // Avoid SQL injections
     if(!filter_var($user_id, FILTER_VALIDATE_INT)) {
         return "";

@@ -1,10 +1,9 @@
 <?php
-//ini_set('error_reporting', E_ALL);
-//ini_set('display_errors', true);
+#ini_set('error_reporting', E_ALL);
+#ini_set('display_errors', true);
 
 require_once('memcache.php');
 require_once('mysql_login.php');
-require_once('server_info.php');
 
 if (!isset($_GET['api_key'])) {
     api_log('api request without a key from '.$_SERVER['REMOTE_ADDR']);
@@ -25,6 +24,7 @@ if (!isset($_GET['api_key'])) {
 
 function valid_worker($api_key,$ip_address) {
 	global $memcache;
+	global $db_link;;
 	if ($memcache) {
 		$memcache->delete('workers');
 		// pull workers array from memcache

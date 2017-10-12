@@ -1,5 +1,4 @@
 <?php
-
 require_once('api_functions.php');
 header("Content-type: application/json");
 
@@ -93,3 +92,4 @@ if ($match_row) {
 // nothing to do
 echo json_encode(array( "task" => mysqli_error($db_link), "timestamp" => date(DATE_ATOM) ));
 ?>
+

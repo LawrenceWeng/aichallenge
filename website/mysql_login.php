@@ -41,14 +41,19 @@ if (!function_exists("api_log")) {
     }
 }
 
+function my_mysqli_real_escape_string($string) {
+    global $db_link;
+    return mysqli_real_escape_string($db_link, $string);
+}
+
 function contest_query() {
     global $contest_sql;
+    global $db_link;
     $args = func_get_args();
     if (count($args) >= 1) {
         $query_name = $args[0];
         if (count($args) > 1) {
-            $query_args = array_map('mysqli_real_escape_string',
-                                    array_slice($args, 1));
+            $query_args = array_map('my_mysqli_real_escape_string', array_slice($args, 1));
             $query = vsprintf($contest_sql[$query_name], $query_args);
         } else {
             $query = $contest_sql[$query_name];
@@ -62,6 +67,8 @@ function contest_query() {
 }
 
 function check_credentials($username, $password) {
+  global $contest_sql;
+  global $db_link;
   $query = "
         SELECT *
         FROM user u

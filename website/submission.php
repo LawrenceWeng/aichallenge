@@ -30,6 +30,7 @@ function create_new_submission_for_current_user() {
 }
 
 function current_submission_id() {
+  global $db_link;
   $user_id = current_user_id();
   if ($user_id == NULL) {
     return -1;
@@ -50,6 +51,7 @@ function current_submission_id() {
 }
 
 function current_submission_status() {
+  global $db_link;
   $user_id = current_user_id();
   if ($user_id == NULL) {
     return -1;
@@ -70,6 +72,7 @@ function current_submission_status() {
  * entering.
  */
 function has_recent_submission() {
+  global $db_link;
   $user_id = current_user_id();
   if ($user_id == NULL) {
     return FALSE;
@@ -87,6 +90,7 @@ function has_recent_submission() {
 }
 
 function submission_status($submission_id) {
+  global $db_link;
   $query = "SELECT * FROM submission " . "WHERE submission_id = " . $submission_id;
   $result = mysqli_query($db_link, $query);
   if ($row = mysqli_fetch_assoc($result)) {
@@ -97,6 +101,7 @@ function submission_status($submission_id) {
 }
 
 function update_current_submission_status($new_status) {
+  global $db_link;
   $submission_id = current_submission_id();
   if ($submission_id < 0) {
     print "<p>submission_id = " . $submission_id . "</p>";

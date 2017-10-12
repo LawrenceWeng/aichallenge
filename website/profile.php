@@ -37,32 +37,34 @@ if ($userresult) {
                              $userdata['mu_change'],
                              $userdata['sigma_change']);
     }
-}
-$rank = ($rank == NULL)?"Not Ranked":$rank;
-$skill = ($skill == NULL)?"No Skillz":$skill;
+#}
+    $rank = ($rank == NULL)?"Not Ranked":$rank;
+    $skill = ($skill == NULL)?"No Skillz":$skill;
 
-$username = htmlentities($userdata["username"], ENT_COMPAT, 'UTF-8');
-$created = nice_date($userdata["created"]); // date("M jS Y",$userdata["created"]);
-$country_id = htmlentities($userdata["country_id"], ENT_COMPAT, 'UTF-8');
-$country_name = htmlentities($userdata["country_name"], ENT_COMPAT, 'UTF-8');
-$country_name = $country_name == NULL ?
-  "Unknown" : htmlentities($country_name, ENT_COMPAT, 'UTF-8');
-$flag_filename = $userdata["flag_filename"];
-$flag_filename = $flag_filename == NULL ? "" : "<img alt=\"$country_name\" width=\"16\" height=\"11\" title=\"$country_name\" src=\"flags/$flag_filename\" />";
-$org_id = htmlentities($userdata["org_id"], ENT_COMPAT, 'UTF-8');
-$org_name = htmlentities($userdata["org_name"], ENT_COMPAT, 'UTF-8');
-$bio = str_replace("\n","<br />",str_replace("\r","", htmlentities($userdata["bio"], ENT_COMPAT, 'UTF-8')));
-if ($org_name == NULL) {
-  $org_name = "None";
-}
-if (logged_in_with_valid_credentials() &&
-    (current_user_id() == $user_id || logged_in_as_admin())) {
-    $logged_in = true;
-    $sid = session_id();
-    $update_key = sha1(
-        $sid . $userdata["activation_code"] . $userdata["email"]);
-} else {
-    $logged_in = false;
+    $username = htmlentities($userdata["username"], ENT_COMPAT, 'UTF-8');
+    $created = nice_date($userdata["created"]); // date("M jS Y",$userdata["created"]);
+    $country_id = htmlentities($userdata["country_id"], ENT_COMPAT, 'UTF-8');
+    $country_name = htmlentities($userdata["country_name"], ENT_COMPAT, 'UTF-8');
+    $country_name = $country_name == NULL ?
+      "Unknown" : htmlentities($country_name, ENT_COMPAT, 'UTF-8');
+    $flag_filename = $userdata["flag_filename"];
+    $flag_filename = $flag_filename == NULL ? "" : "<img alt=\"$country_name\" width=\"16\" height=\"11\" title=\"$country_name\" src=\"flags/$flag_filename\" />";
+    $org_id = htmlentities($userdata["org_id"], ENT_COMPAT, 'UTF-8');
+    $org_name = htmlentities($userdata["org_name"], ENT_COMPAT, 'UTF-8');
+    $bio = str_replace("\n","<br />",str_replace("\r","", htmlentities($userdata["bio"], ENT_COMPAT, 'UTF-8')));
+    if ($org_name == NULL) {
+      $org_name = "None";
+    }
+
+    if (logged_in_with_valid_credentials() &&
+        (current_user_id() == $user_id || logged_in_as_admin())) {
+        $logged_in = true;
+        $sid = session_id();
+        $update_key = sha1(
+            $sid . $userdata["activation_code"] . $userdata["email"]);
+    } else {
+        $logged_in = false;
+    }
 }
 if (!$userresult) {
   echo "<p>Invalid User ID</p>";

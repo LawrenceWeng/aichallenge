@@ -15,6 +15,7 @@ require_once('session.php');
  */
 function getOrganizationRankingsTableString($top)
 {
+    global $db_link;
 
     $username = current_username();
 

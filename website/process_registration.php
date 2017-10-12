@@ -12,12 +12,14 @@ require_once 'web_util.php';
 require_once('memcache.php');
 
 function check_valid_user_status_code($code) {
+  global $db_link;
   $query = "SELECT * FROM user_status_code WHERE status_id = ".(int)$code;
   $result = mysqli_query($db_link, $query);
   return (boolean)mysqli_num_rows($result);
 }
 
 function check_valid_organization($code) {
+  global $db_link;
   if ($code == 999) {
     return False;
   }
@@ -27,6 +29,7 @@ function check_valid_organization($code) {
 }
 
 function check_valid_country($id) {
+  global $db_link;
   if ($id == 999 || !filter_var($id, FILTER_VALIDATE_INT)) {
     return False;
   }
@@ -45,6 +48,7 @@ function valid_username($s) {
 
 function create_new_organization( $org_name ) {
     global $memcache;
+    global $db_link;
     
     if ($memcache) {
         $memcache->delete('lookup:org_id');

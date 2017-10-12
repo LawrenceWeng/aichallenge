@@ -39,7 +39,6 @@ if (file_exists('server_head.html')) {
 ?>
     </head>
 <?php
-
 require_once('session.php');
 
 // attempt cookie login if needed

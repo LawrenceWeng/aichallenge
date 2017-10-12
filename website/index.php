@@ -1,5 +1,4 @@
 <?php
-
 $title = "Home";
 include('header.php');
 require_once('memcache.php');
@@ -26,5 +25,4 @@ if(file_exists('server_message.html')) {
 ?>
 
 <p>Browse other <a href="games.php">recent games here</a>.</p>
-
 <?php include 'footer.php'; ?>

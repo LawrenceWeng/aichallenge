@@ -6,6 +6,7 @@ $title = "Account Confirmed";
 require_once('header.php');
 
 function get_userid_from_confirmation_code($confirmation_code) {
+    global $db_link;
     $confirmation_code = mysqli_real_escape_string($db_link,  stripslashes( $confirmation_code ) );
     $query = "
         SELECT user_id

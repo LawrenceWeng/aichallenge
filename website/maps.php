@@ -6,6 +6,7 @@ require_once("mysql_login.php");
 require_once("nice.php");
 
 function get_map_data() {
+    global $db_link;
     $map_query = "select m.map_id, filename, priority, max_turns, m.timestamp,
         players, count(*) as game_count, avg(g.game_length) as avg_length,
         STDDEV(g.game_length) as stddev_length

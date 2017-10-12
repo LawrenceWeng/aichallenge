@@ -4,6 +4,7 @@ require_once('mysql_login.php');
 require_once('bad_words.php');
 
 function check_valid_organization($id) {
+  global $db_link;
   if ($id == 999 || filter_var($id, FILTER_VALIDATE_INT) === FALSE) {
     return False;
   }
@@ -16,6 +17,7 @@ function check_valid_organization($id) {
 }
 
 function check_valid_country($id) {
+  global $db_link;
   if ($id == 999 || !filter_var($id, FILTER_VALIDATE_INT)) {
     return False;
   }

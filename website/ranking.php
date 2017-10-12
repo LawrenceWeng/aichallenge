@@ -109,7 +109,7 @@ function create_ranking_json($page=0, $org_id=NULL, $country_id=NULL, $language_
     // get count of rows and pages
     $results = contest_query("select_rankings_page_count", $where);
     if ($results) {
-        while ($row = mysqli_fetch_array($results, MYSQL_NUM)) {
+        while ($row = mysqli_fetch_array($results, MYSQLI_NUM)) {
             $row_count = $row[0];
             $page_count = ceil($row_count / $page_size);
         }
@@ -141,7 +141,7 @@ function create_ranking_json($page=0, $org_id=NULL, $country_id=NULL, $language_
         } else {
             $filter_rank = NULL;
         }   
-        while ($rank_row = mysqli_fetch_array($results, MYSQL_NUM)) {
+        while ($rank_row = mysqli_fetch_array($results, MYSQLI_NUM)) {
             if ($filtered) {
                 if ($row["rank"]) {
                     $filter_rank += 1;
@@ -197,7 +197,7 @@ function create_ranking_table($page=0, $org_id=NULL, $country_id=NULL, $language
     // get count of rows and pages
     $results = contest_query("select_rankings_page_count", $where);
     if ($results) {
-        while ($row = mysqli_fetch_array($results, MYSQL_NUM)) {
+        while ($row = mysqli_fetch_array($results, MYSQLI_NUM)) {
             $row_count = $row[0];
             $page_count = ceil($row_count / $page_size);
         }

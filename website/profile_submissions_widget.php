@@ -1,7 +1,8 @@
 <?php
-require_once( "pagination.php");
+require_once("pagination.php");
 require_once("session.php");
 require_once("nice.php");
+require_once("mysql_login.php");
 
 $status_msg = array(10 => "Created: entry record created in database",
                     20 => "Uploaded: ready to be unzipped and compiled",
@@ -26,6 +27,7 @@ $status_msg = array(10 => "Created: entry record created in database",
 function getSubmissionTableString($user_id, $viewmore = true, $viewresults = 10, $viewlink, $page=0)
 {
     global $status_msg;
+    global $db_link;
 
     // Avoid SQL injections
     if(!filter_var($user_id, FILTER_VALIDATE_INT)) {
