@@ -26,10 +26,11 @@ def main(max_games=10000):
     except IOError:
        # couldn't start the file logger
        pass
-    connection = MySQLdb.connect(host = server_info["db_host"],
-                                     user = server_info["db_username"],
-                                     passwd = server_info["db_password"],
-                                     db = server_info["db_name"])
+    connection = MySQLdb.connect(database = server_info["db_name"])
+    #connection = MySQLdb.connect(host = server_info["db_host"],
+    #                                 user = server_info["db_username"],
+    #                                 passwd = server_info["db_password"],
+    #                                 db = server_info["db_name"])
     cursor = connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("""INSERT INTO games_archive
         SELECT g.* FROM games g LEFT JOIN games_archive ga

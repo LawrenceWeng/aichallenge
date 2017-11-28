@@ -54,10 +54,11 @@ log.addHandler(handler2)
 
 
 def main(dry_run):
-    connection = MySQLdb.connect(host = server_info["db_host"],
-                                     user = server_info["db_username"],
-                                     passwd = server_info["db_password"],
-                                     db = server_info["db_name"])
+    connection = MySQLdb.connect(database = server_info["db_name"])
+    #connection = MySQLdb.connect(host = server_info["db_host"],
+    #                                 user = server_info["db_username"],
+    #                                 passwd = server_info["db_password"],
+    #                                 db = server_info["db_name"])
     cursor = connection.cursor()
 
     cursor.execute("""select map_id, filename, max_turns, timestamp from map

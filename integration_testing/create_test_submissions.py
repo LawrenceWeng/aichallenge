@@ -9,10 +9,11 @@ if len(sys.argv) != 2:
   print "USAGE: python create_test_submissions.py num_submissions"
   sys.exit(1)
 n = int(sys.argv[1])
-connection = MySQLdb.connect(host = server_info["db_host"],
-                             user = server_info["db_username"],
-                             passwd = server_info["db_password"],
-                             db = server_info["db_name"])
+connection = MySQLdb.connect(database = server_info["db_name"])
+#connection = MySQLdb.connect(host = server_info["db_host"],
+#                             user = server_info["db_username"],
+#                             passwd = server_info["db_password"],
+#                             db = server_info["db_name"])
 cursor = connection.cursor(MySQLdb.cursors.DictCursor)
 query = "SELECT user_id, username FROM users WHERE username LIKE 'testbot%'"
 cursor.execute(query)

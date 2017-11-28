@@ -40,10 +40,11 @@ class Matchup:
 
 
 def main(rounds = 1):
-    connection = MySQLdb.connect(host = server_info["db_host"],
-                                 user = server_info["db_username"],
-                                 passwd = server_info["db_password"],
-                                 db = server_info["db_name"],
+    connection = MySQLdb.connect(database = server_info["db_name"],
+    #connection = MySQLdb.connect(host = server_info["db_host"],
+    #                             user = server_info["db_username"],
+    #                             passwd = server_info["db_password"],
+    #                             db = server_info["db_name"],
                                  cursorclass = MySQLdb.cursors.DictCursor)
     cursor = connection.cursor()
 

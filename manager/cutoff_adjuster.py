@@ -46,10 +46,11 @@ def main():
     target_cutoff = args.cutoff
     log("Target cutoff is %d at %s" % (target_cutoff, target_time))
 
-    connection = MySQLdb.connect(host = server_info["db_host"],
-                                 user = server_info["db_username"],
-                                 passwd = server_info["db_password"],
-                                 db = server_info["db_name"])
+    connection = MySQLdb.connect(database = server_info["db_name"])
+    #connection = MySQLdb.connect(host = server_info["db_host"],
+    #                             user = server_info["db_username"],
+    #                             passwd = server_info["db_password"],
+    #                             db = server_info["db_name"])
     cursor = connection.cursor()
 
     cursor.execute(CUTOFF_QUERY)

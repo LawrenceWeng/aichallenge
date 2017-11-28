@@ -17,10 +17,11 @@ def main():
                 map_files.add(os.path.join(root, filepath)[len(maps_path)+1:])
     
     # get list of maps in database
-    connection = MySQLdb.connect(host = server_info["db_host"],
-                                 user = server_info["db_username"],
-                                 passwd = server_info["db_password"],
-                                 db = server_info["db_name"])
+    connection = MySQLdb.connect(database = server_info["db_name"])
+    #connection = MySQLdb.connect(host = server_info["db_host"],
+    #                             user = server_info["db_username"],
+    #                             passwd = server_info["db_password"],
+    #                             db = server_info["db_name"])
     cursor = connection.cursor()
     cursor.execute(sql["select_map_filenames"])
     db_maps = set([row[0] for row in cursor.fetchall()])

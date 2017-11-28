@@ -4,14 +4,15 @@
 
 require_once('api_functions.php');
 require_once('server_info.php');
-$skills_dir = $server_info["repo_path"] . "/manager/PHPSkills/Skills/";
-require_once($skills_dir.'TrueSkill/FactorGraphTrueSkillCalculator.php');
-require_once($skills_dir.'GameInfo.php');
-require_once($skills_dir.'Player.php');
-require_once($skills_dir.'Rating.php');
-require_once($skills_dir.'Team.php');
-require_once($skills_dir.'Teams.php');
-require_once($skills_dir.'SkillCalculator.php');
+$skills_dir = $server_info["repo_path"] . "/manager/PHPSkills/PHPSkills/";
+require_once($skills_dir.'vendor/autoload.php');
+require_once($skills_dir.'src/TrueSkill/FactorGraphTrueSkillCalculator.php');
+require_once($skills_dir.'src/GameInfo.php');
+require_once($skills_dir.'src/Player.php');
+require_once($skills_dir.'src/Rating.php');
+require_once($skills_dir.'src/Team.php');
+require_once($skills_dir.'src/Teams.php');
+require_once($skills_dir.'src/SkillCalculator.php');
 
 use Moserware\Skills\TrueSkill\FactorGraphTrueSkillCalculator;
 use Moserware\Skills\GameInfo;
@@ -112,7 +113,7 @@ if (array_key_exists('error', $gamedata)) {
         // mysqli_query($db_link, "ROLLBACK;");
         die();
     }
-    $game_id = mysqli_insert_id();
+    $game_id = mysqli_insert_id($db_link);
     // calculate new trueskill values
     $skill_result = contest_query("select_matchup_players", $gamedata->matchup_id);
     if (!$skill_result) {
@@ -167,8 +168,9 @@ if (array_key_exists('error', $gamedata)) {
         die();
     }
 
-    $mysqli = new MySQLI($db_host, $db_username, $db_password, $db_name);
-    
+    #$mysqli = new MySQLI($db_host, $db_username, $db_password, $db_name);
+    $mysqli = mysqli_connect("p:".$db_host, $db_username, NULL) or die('cannot connect: ' . print_r(error_get_last()));
+    mysqli_select_db($mysqli,"$db_name")or die("cannot select DB");
     // wait for skill update to finish
     $correct = False;
     $sleep_time = 1;

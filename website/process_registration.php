@@ -61,7 +61,7 @@ function create_new_organization( $org_name ) {
     } else {
         $query = "INSERT INTO organization (`name`) VALUES('".$org_name."')";
         $result = mysqli_query($db_link, $query);
-        return mysqli_insert_id();
+        return mysqli_insert_id($db_link);
     }
 }
 

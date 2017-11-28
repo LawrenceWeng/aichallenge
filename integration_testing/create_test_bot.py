@@ -30,10 +30,11 @@ def create_starter_bot(name):
     if not os.path.exists(bot_zip_starter):
         print("Starter package {0} not found.".format(bot_zip_starter))
         return False
-    connection = MySQLdb.connect(host = server_info['db_host'],
-                                 user = server_info['db_username'],
-                                 passwd = server_info['db_password'],
-                                 db = server_info['db_name'])
+    connection = MySQLdb.connect(database = server_info["db_name"])
+    #connection = MySQLdb.connect(host = server_info['db_host'],
+    #                             user = server_info['db_username'],
+    #                             passwd = server_info['db_password'],
+    #                             db = server_info['db_name'])
     cursor = connection.cursor(MySQLdb.cursors.DictCursor)
     
     # get next bot name number
@@ -90,10 +91,11 @@ def create_test_bot(name, language):
         else:
             return True
     
-    connection = MySQLdb.connect(host = server_info['db_host'],
-                                 user = server_info['db_username'],
-                                 passwd = server_info['db_password'],
-                                 db = server_info['db_name'])
+    connection = MySQLdb.connect(database = server_info["db_name"]);
+    #connection = MySQLdb.connect(host = server_info['db_host'],
+    #                             user = server_info['db_username'],
+    #                             passwd = server_info['db_password'],
+    #                             db = server_info['db_name'])
     cursor = connection.cursor(MySQLdb.cursors.DictCursor)
     
     # get next bot name number
@@ -110,7 +112,7 @@ def create_test_bot(name, language):
     cursor.execute('''
     insert into user
     values (null,'%s%s','$6$rounds=54321$hQd}`.j1e#X&PuN*$D8.wbEp6vwwLoC27GpiGVOFediuAWaGTQ2MPHD64i/bVGxtj0XNeRJeJRKVgDC/uTh.W2m5YoaoA6To1cJ7ZF/',
-    '%s%s@ai-contest.com',1,'7b3f9842775fa9c9d489a3714e857580',0,'Test Account',11,current_timestamp(),0,0);
+    NULL,'%s%s@ai-contest.com',1,'7b3f9842775fa9c9d489a3714e857580',0,'Test Account',11,current_timestamp(),0,0,NULL,NULL);
     ''' % (name, bot_id, name, bot_id))
     user_id = cursor.lastrowid
     print('user_id: %s' % user_id)

@@ -53,8 +53,8 @@ if @min_players <= @max_players then
     from submission
     where latest = 1;
     
-    insert matchup (seed_id, worker_id)
-    select s.user_id, 0
+    insert matchup (seed_id, worker_id, map_id, max_turns)
+    select s.user_id, 0, 0,0 -- map_id and max_turns are updated later
     from submission s
     inner join user u
         on u.user_id = s.user_id

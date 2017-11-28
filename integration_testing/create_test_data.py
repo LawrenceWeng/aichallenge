@@ -8,10 +8,11 @@ sys.path.append("../manager")
 from server_info import server_info
 
 def create_test_data(user_count=10000, map_count=1000, game_count=30000, matchup_count=10):
-    connection = MySQLdb.connect(host = server_info["db_host"],
-                                 user = server_info["db_username"],
-                                 passwd = server_info["db_password"],
-                                 db = server_info["db_name"])
+    connection = MySQLdb.connect(database = server_info["db_name"])
+    #connection = MySQLdb.connect(host = server_info["db_host"],
+    #                             user = server_info["db_username"],
+    #                             passwd = server_info["db_password"],
+    #                             db = server_info["db_name"])
     cursor = connection.cursor(MySQLdb.cursors.DictCursor)
     
     # create loads of users

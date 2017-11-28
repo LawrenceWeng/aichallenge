@@ -12,10 +12,10 @@ xcopy ants\maps maps /e /i /y
 rmdir /s /q website\ants
 mkdir website\ants
 mkdir website\ants\games
-mysql -u aichallenge -p%1 -D aichallenge < sql\0_schema.sql
-mysql -u aichallenge -p%1 -D aichallenge < sql\1_data.sql
-mysql -u aichallenge -p%1 -D aichallenge < sql\2_generate_matchup.sql
-mysql -u aichallenge -p%1 -D aichallenge < sql\3_worker.sql
+mysql -D aichallenge < sql\0_schema.sql
+mysql -D aichallenge < sql\1_data.sql
+mysql -D aichallenge < sql\2_generate_matchup.sql
+mysql -D aichallenge < sql\3_worker.sql
 manager\add_maps_to_database.py
 manager\create_test_bot.py ErrorBot -c 1
 manager\create_test_bot.py TimeoutBot -c 1

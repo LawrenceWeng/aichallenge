@@ -3,6 +3,7 @@
 import time
 
 import MySQLdb
+#import mysql.connector
 from server_info import server_info
 
 DEFAULT_BUFFER = 50
@@ -13,12 +14,17 @@ def log(msg):
     print "%s: %s" % (timestamp, msg)
 
 def main():
-    connection = MySQLdb.connect(host = server_info["db_host"],
-                                 user = server_info["db_username"],
-                                 passwd = server_info["db_password"],
-                                 db = server_info["db_name"])
+    connection = MySQLdb.connect(autocommit=True,database = server_info["db_name"])
+#connection = MySQLdb.connect(host = server_info["db_host"],
+    #connection = mysql.connector.connect(host = server_info["db_host"],
+    #                             user = server_info["db_username"],
+    #                             #passwd = server_info["db_password"],
+    #                              auth_plugin='mysql_native_password',
+    #                             password = 'g00dby3',
+    #                             database = server_info["db_name"])
     cursor = connection.cursor()
 
+    #cursor.callproc("generate_matchup")
     buf_size = DEFAULT_BUFFER
     log("Buffer size set to %d" % (buf_size,))
 
@@ -26,7 +32,11 @@ def main():
     full = False
     while True:
         cursor.execute("select count(*) from matchup where worker_id is NULL")
+        #cursor.execute("select database()")
+        #cursor.callproc("generate_matchup")
         cur_buffer = cursor.fetchone()[0]
+        #log("Current Buffer: %s" % cur_buffer)
+        #sys.exit()
         if cur_buffer >= buf_size:
             log("Buffer full with %d matches in buffer" % (cur_buffer,))
             time.sleep(10)

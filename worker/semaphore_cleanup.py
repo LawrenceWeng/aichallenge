@@ -15,10 +15,11 @@ for line in ipcs_out:
     if len(values) == 5 and values[2].startswith("jailuser"):
         user_semaphores[values[2]].append(values[1])
 
-connection = MySQLdb.connect(host = server_info["db_host"],
-        user = server_info["db_username"],
-        passwd = server_info["db_password"],
-        db = server_info["db_name"])
+connection = MySQLdb.connect(database = server_info["db_name"])
+#connection = MySQLdb.connect(host = server_info["db_host"],
+#        user = server_info["db_username"],
+#        passwd = server_info["db_password"],
+#        db = server_info["db_name"])
 cursor = connection.cursor(MySQLdb.cursors.DictCursor)
 query = "UPDATE jail_users SET in_use = 1 WHERE username = '%s' AND in_use = 0"
 
